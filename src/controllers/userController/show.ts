@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
-import prisma from "../../databases/prisma/connection";
 
-export default async function destroy(req: Request, res: Response) {
+import prisma from "../../databases/prisma/connection";
+import { userSelect } from "./utils/select";
+
+export default async function show(req: Request, res: Response) {
   const userId = Number(req.params.id);
 
   if (userId != req.tokenPayload?.id) {
@@ -9,13 +11,14 @@ export default async function destroy(req: Request, res: Response) {
   }
 
   try {
-    await prisma.user.delete({
+    const user = await prisma.user.findUnique({
       where: {
         id: userId,
       },
+      select: userSelect,
     });
 
-    return res.sendStatus(204);
+    return res.json(user);
   } catch (error) {
     console.log(error);
     return res.status(400).json({ error });

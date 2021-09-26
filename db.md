@@ -9,3 +9,7 @@ sudo docker run -d --rm \
     -p 5432:5432 \
     postgres:13.4
 ```
+
+```
+npx prisma migrate dev
+```
