@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import prisma from "../../databases/prisma/connection";
-import { userPrismaSelect } from "./utils/select";
+import { userPrismaSelect } from "./utils/prismaSelect";
 
 export default async function show(req: Request, res: Response) {
   const userId = Number(req.params.id);

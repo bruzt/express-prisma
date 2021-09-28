@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import prisma from "../../databases/prisma/connection";
-import { userPrismaSelect } from "./utils/select";
+import { userPrismaSelect } from "./utils/prismaSelect";
 
 export default async function store(req: Request, res: Response) {
   try {
