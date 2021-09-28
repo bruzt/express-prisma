@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import prisma from "../../databases/prisma/connection";
-import { userSelect } from "./utils/select";
+import { userPrismaSelect } from "./utils/select";
 
 export default async function store(req: Request, res: Response) {
   try {
@@ -17,7 +17,7 @@ export default async function store(req: Request, res: Response) {
 
     const newUser = await prisma.user.create({
       data: req.body,
-      select: userSelect,
+      select: userPrismaSelect,
     });
 
     return res.status(201).json(newUser);
