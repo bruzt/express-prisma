@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 
 import prisma from "../../databases/prisma/connection";
-import { userPrismaSelect } from "./utils/prismaSelect";
 
 export default async function list(req: Request, res: Response) {
   const take = req.query.take ? Number(req.query.take) : undefined;
@@ -11,7 +10,6 @@ export default async function list(req: Request, res: Response) {
     const countPromise = prisma.user.count();
 
     const usersPromise = prisma.user.findMany({
-      select: userPrismaSelect,
       take,
       skip,
     });
@@ -21,7 +19,12 @@ export default async function list(req: Request, res: Response) {
       usersPromise,
     ]);
 
-    return res.json({ count, users });
+    const usersWithoutPassword = users.map((user) => ({
+      ...user,
+      password: undefined,
+    }));
+
+    return res.json({ count, users: usersWithoutPassword });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ error });

@@ -11,10 +11,15 @@ generator client {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                     Int       @id @default(autoincrement())
+  name                   String
+  email                  String    @unique
+  cpf                    String    @unique
+  admin                  Boolean   @default(false)
+  password               String
+  reset_password_token   String?
+  reset_password_expires DateTime?
+  created_at             DateTime  @default(now())
+  updated_at             DateTime  @updatedAt
+  deleted_at             DateTime?
 }

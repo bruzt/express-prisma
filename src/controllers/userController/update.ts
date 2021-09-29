@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 
 import prisma from "../../databases/prisma/connection";
-import { userPrismaSelect } from "./utils/prismaSelect";
 
 export default async function update(req: Request, res: Response) {
   const userId = Number(req.params.id);
@@ -24,10 +23,11 @@ export default async function update(req: Request, res: Response) {
         id: userId,
       },
       data: req.body,
-      select: userPrismaSelect,
     });
 
-    return res.json(updatedUser);
+    const updatedUserWithoutPassword = { ...updatedUser, password: undefined };
+
+    return res.json(updatedUserWithoutPassword);
   } catch (error) {
     console.log(error);
     return res.status(400).json({ error });
