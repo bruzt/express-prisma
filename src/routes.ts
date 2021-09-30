@@ -9,6 +9,7 @@ import sessionValidator from "./controllers/sessionController/validators";
 import userValidator from "./controllers/userController/validators";
 
 import jwtAuthentication from "./middlewares/jwtAuthentication";
+import adminJwtAuthentication from "./middlewares/adminJwtAuthentication";
 
 const router = Router();
 
@@ -16,7 +17,12 @@ const router = Router();
 router.post("/session", sessionValidator.store, sessionController.store);
 
 // USER
-router.get("/users", userValidator.list, userController.list);
+router.get(
+  "/users",
+  adminJwtAuthentication,
+  userValidator.list,
+  userController.list
+);
 router.get(
   "/users/:id",
   userValidator.show,
