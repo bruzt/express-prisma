@@ -9,9 +9,10 @@ export default async function list(req: Request, res: Response) {
   const { email, password } = req.body;
 
   try {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.user.findFirst({
       where: {
         email,
+        deleted_at: null,
       },
     });
 
@@ -26,6 +27,7 @@ export default async function list(req: Request, res: Response) {
     const token = jwt.sign(
       {
         id: user.id,
+        admin: user.admin,
       },
       String(process.env.APP_SECRET),
       { expiresIn: "12h" }

@@ -9,6 +9,15 @@ export default async function destroy(req: Request, res: Response) {
   }
 
   try {
+    const user = await prisma.user.findFirst({
+      where: {
+        id: userId,
+        deleted_at: null,
+      },
+    });
+
+    if (!user) return res.status(400).json({ message: "User not found" });
+
     await prisma.user.delete({
       where: {
         id: userId,

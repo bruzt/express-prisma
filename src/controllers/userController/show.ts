@@ -10,9 +10,10 @@ export default async function show(req: Request, res: Response) {
   }
 
   try {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.user.findFirst({
       where: {
         id: userId,
+        deleted_at: null,
       },
     });
 

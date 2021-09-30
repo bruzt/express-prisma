@@ -1,23 +1,19 @@
-import { Prisma, User } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import bcrypt from "bcrypt";
 
 export default async function encryptUserPassword(
-  params: Prisma.MiddlewareParams,
-  next: (params: Prisma.MiddlewareParams) => Promise<any>
+  params: Prisma.MiddlewareParams
 ) {
-  const data: User = params.args?.data;
-
   if (params.model == "User") {
     if (params.action == "create" || params.action == "update") {
-      if (data.password) {
+      if (params.args.data.password) {
         const salt = await bcrypt.genSalt();
-        const hashPassword = await bcrypt.hash(data.password, salt);
+        const hashPassword = await bcrypt.hash(params.args.data.password, salt);
 
-        data.password = hashPassword;
+        params.args.data.password = hashPassword;
       }
     }
   }
 
-  const newParams = { ...params, args: { ...params.args, data } };
-  return next(newParams);
+  return params;
 }

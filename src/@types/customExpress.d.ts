@@ -1,5 +1,6 @@
 interface ITokenPayload {
   id: number;
+  admin: boolean;
 }
 
 declare namespace Express {
