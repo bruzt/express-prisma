@@ -1,18 +1,40 @@
 import { Router } from "express";
 
-import userController from "./controllers/userController";
+// CONTROLLERS
 import sessionController from "./controllers/sessionController";
+import userController from "./controllers/userController";
+
+// VALIDATORS
+import sessionValidator from "./controllers/sessionController/validators";
+import userValidator from "./controllers/userController/validators";
 
 import jwtAuthentication from "./middlewares/jwtAuthentication";
 
 const router = Router();
 
-router.post("/session", sessionController.store);
+// SESSION
+router.post("/session", sessionValidator.store, sessionController.store);
 
-router.get("/user", userController.list);
-router.get("/user/:id", jwtAuthentication, userController.show);
-router.post("/user", userController.store);
-router.put("/user/:id", jwtAuthentication, userController.update);
-router.delete("/user/:id", jwtAuthentication, userController.destroy);
+// USER
+router.get("/users", userValidator.list, userController.list);
+router.get(
+  "/users/:id",
+  userValidator.show,
+  jwtAuthentication,
+  userController.show
+);
+router.post("/users", userValidator.store, userController.store);
+router.put(
+  "/users/:id",
+  userValidator.update,
+  jwtAuthentication,
+  userController.update
+);
+router.delete(
+  "/users/:id",
+  userValidator.destroy,
+  jwtAuthentication,
+  userController.destroy
+);
 
 export default router;
