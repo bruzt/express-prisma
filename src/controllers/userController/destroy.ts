@@ -2,11 +2,7 @@ import { Request, Response } from "express";
 import prisma from "../../databases/prisma/connection";
 
 export default async function destroy(req: Request, res: Response) {
-  const userId = Number(req.params.id);
-
-  if (userId != req.tokenPayload?.id) {
-    return res.status(403).json({ message: "Not authorized" });
-  }
+  const userId = req.tokenPayload?.id;
 
   try {
     const user = await prisma.user.findFirst({
