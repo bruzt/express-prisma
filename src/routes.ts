@@ -58,5 +58,11 @@ router.post(
   jwtAuthentication,
   addressController.store
 );
+router.put(
+  "/addresses/:id",
+  addressValidator.update,
+  jwtAuthentication,
+  addressController.update
+);
 
 export default router;
