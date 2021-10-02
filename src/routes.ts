@@ -64,5 +64,11 @@ router.put(
   jwtAuthentication,
   addressController.update
 );
+router.delete(
+  "/addresses/:id",
+  addressValidator.destroy,
+  jwtAuthentication,
+  addressController.destroy
+);
 
 export default router;
