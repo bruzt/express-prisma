@@ -21,7 +21,7 @@ export default async function update(req: Request, res: Response) {
     });
 
     if (!user) return res.status(400).json({ message: "User not found" });
-    if (!user.addresses[0])
+    if (user.addresses.length == 0)
       return res.status(400).json({ message: "Address not found" });
 
     const updatedAddress = await prisma.addresses.update({
