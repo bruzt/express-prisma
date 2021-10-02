@@ -1,4 +1,4 @@
-# Postgres
+# Postgres Dev
 
 ```
 sudo docker run -d --rm \
@@ -12,4 +12,8 @@ sudo docker run -d --rm \
 
 ```
 npx prisma migrate dev
+```
+
+```
+npx prisma studio
 ```
