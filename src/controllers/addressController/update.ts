@@ -7,22 +7,15 @@ export default async function update(req: Request, res: Response) {
   const addressId = Number(req.params.id);
 
   try {
-    const user = await prisma.user.findUnique({
+    const address = await prisma.addresses.findFirst({
       where: {
-        id: userId,
-      },
-      include: {
-        addresses: {
-          where: {
-            id: addressId,
-          },
-        },
+        id: addressId,
+        user_id: userId,
+        deleted_at: null,
       },
     });
 
-    if (!user) return res.status(400).json({ message: "User not found" });
-    if (user.addresses.length == 0)
-      return res.status(400).json({ message: "Address not found" });
+    if (!address) return res.status(400).json({ message: "Address not found" });
 
     const updatedAddress = await prisma.addresses.update({
       where: {

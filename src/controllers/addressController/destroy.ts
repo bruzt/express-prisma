@@ -7,24 +7,15 @@ export default async function destroy(req: Request, res: Response) {
   const id = req.tokenPayload?.id;
 
   try {
-    const user = await prisma.user.findFirst({
+    const address = await prisma.addresses.findFirst({
       where: {
-        id,
+        id: paramsId,
+        user_id: id,
         deleted_at: null,
-      },
-      include: {
-        addresses: {
-          where: {
-            id: paramsId,
-            deleted_at: null,
-          },
-        },
       },
     });
 
-    if (!user) return res.status(404).json({ message: "user not found" });
-    if (user.addresses.length == 0)
-      return res.status(404).json({ message: "address not found" });
+    if (!address) return res.status(404).json({ message: "address not found" });
 
     await prisma.addresses.delete({
       where: {
