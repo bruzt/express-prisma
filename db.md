@@ -17,3 +17,12 @@ npx prisma migrate dev
 ```
 npx prisma studio
 ```
+
+# Redis Dev
+
+```
+sudo docker run -d --rm \
+    -p 6379:6379 \
+    --name redis-prisma \
+    redis:6.2.5
+```

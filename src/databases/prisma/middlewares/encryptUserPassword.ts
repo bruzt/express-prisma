@@ -2,7 +2,8 @@ import { Prisma } from "@prisma/client";
 import bcrypt from "bcrypt";
 
 export default async function encryptUserPassword(
-  params: Prisma.MiddlewareParams
+  params: Prisma.MiddlewareParams,
+  next: (params: Prisma.MiddlewareParams) => Promise<any>
 ) {
   if (params.model == "User") {
     if (params.action == "create" || params.action == "update") {
@@ -15,5 +16,5 @@ export default async function encryptUserPassword(
     }
   }
 
-  return params;
+  return next(params);
 }
