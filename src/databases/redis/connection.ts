@@ -16,6 +16,7 @@ async function getRedis(key: string) {
 }
 
 export default {
+  redisClient,
   setRedis,
   getRedis,
 };
