@@ -11,7 +11,7 @@ sudo docker run -d --rm \
 ```
 
 ```
-npx prisma migrate dev
+npm run migrate:dev
 ```
 
 ```
