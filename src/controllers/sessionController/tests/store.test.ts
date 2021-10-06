@@ -35,7 +35,7 @@ describe("sessionController Store Test Suit", () => {
       },
     });
 
-    const response = await supertest(app).post("/session").send({
+    const response = await supertest(app).post("/sessions").send({
       email: "test@test.com",
       password: "passtest",
     });
@@ -50,7 +50,7 @@ describe("sessionController Store Test Suit", () => {
   });
 
   it('should return error for "one or more fields are missing in body"', async () => {
-    const response = await supertest(app).post("/session").send({
+    const response = await supertest(app).post("/sessions").send({
       email: "test@test.com",
     });
 
@@ -59,7 +59,7 @@ describe("sessionController Store Test Suit", () => {
   });
 
   it("should not authenticated if user not exists", async () => {
-    const response = await supertest(app).post("/session").send({
+    const response = await supertest(app).post("/sessions").send({
       email: "test@test.com",
       password: "passtest",
     });
@@ -77,7 +77,7 @@ describe("sessionController Store Test Suit", () => {
       },
     });
 
-    const response = await supertest(app).post("/session").send({
+    const response = await supertest(app).post("/sessions").send({
       email: "test@test.com",
       password: "testpass",
     });
