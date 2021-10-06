@@ -16,7 +16,7 @@ import adminJwtAuthentication from "./middlewares/adminJwtAuthentication";
 const router = Router();
 
 // SESSION
-router.post("/session", sessionValidator.store, sessionController.store);
+router.post("/sessions", sessionValidator.store, sessionController.store);
 
 // USER
 router.get(
