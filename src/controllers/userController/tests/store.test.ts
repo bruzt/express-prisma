@@ -1,5 +1,4 @@
 import supertest from "supertest";
-import jwt from "jsonwebtoken";
 
 import prisma from "../../../databases/prisma/connection";
 import redisConnection from "../../../databases/redis/connection";
