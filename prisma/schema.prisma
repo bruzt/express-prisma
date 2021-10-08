@@ -43,19 +43,78 @@ model Addresses {
 }
 
 model Order {
-  id             Int        @id @default(autoincrement())
-  freight_name   String
-  freight_price  Decimal
-  total_price    Decimal
-  payment_method String
-  status         String     @default("waiting_payment")
-  boleto_url     String?
-  tracking_code  String?
-  created_at     DateTime   @default(now())
-  updated_at     DateTime   @updatedAt
-  deleted_at     DateTime?
-  user_id        Int
-  address_id     Int?
-  user           User       @relation(fields: [user_id], references: [id])
-  address        Addresses? @relation(fields: [address_id], references: [id])
+  id              Int               @id @default(autoincrement())
+  freight_name    String
+  freight_price   Decimal
+  total_price     Decimal
+  payment_method  String
+  status          String            @default("waiting_payment")
+  boleto_url      String?
+  tracking_code   String?
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+  deleted_at      DateTime?
+  user_id         Int
+  address_id      Int?
+  user            User              @relation(fields: [user_id], references: [id])
+  address         Addresses?        @relation(fields: [address_id], references: [id])
+  Orders_products Orders_products[]
+}
+
+model Category {
+  id         Int       @id @default(autoincrement())
+  name       String
+  parent_id  Int?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  Product    Product[]
+}
+
+model Product {
+  id                      Int               @id @default(autoincrement())
+  title                   String
+  description             String
+  html_body               String?           @default("'<p>Em breve</p>'")
+  price                   Decimal
+  quantity_stock          Int               @default(0)
+  quantity_sold           Int               @default(0)
+  discount_percent        Int               @default(0)
+  discount_datetime_start DateTime?
+  discount_datetime_end   DateTime?
+  tangible                Boolean
+  weight                  Float
+  length                  Float
+  height                  Float
+  width                   Float
+  created_at              DateTime          @default(now())
+  updated_at              DateTime          @updatedAt
+  deleted_at              DateTime?
+  category_id             Int
+  category                Category          @relation(fields: [category_id], references: [id])
+  Product_images          Images[]
+  Orders_products         Orders_products[]
+}
+
+model Images {
+  id         Int      @id @default(autoincrement())
+  url        String
+  filename   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  product_id Int
+  product    Product  @relation(fields: [product_id], references: [id])
+}
+
+model Orders_products {
+  quantity_buyed           Int
+  product_price            Decimal
+  product_discount_percent Int      @default(0)
+  created_at               DateTime @default(now())
+  updated_at               DateTime @updatedAt
+  order_id                 Int
+  product_id               Int
+  order                    Order    @relation(fields: [order_id], references: [id])
+  product                  Product  @relation(fields: [product_id], references: [id])
+
+  @@id([order_id, product_id])
 }
