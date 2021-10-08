@@ -33,6 +33,11 @@ export default async function list(req: Request, res: Response) {
       skip: offset,
       include: {
         address: true,
+        Orders_products: {
+          include: {
+            product: true,
+          },
+        },
       },
     });
 
