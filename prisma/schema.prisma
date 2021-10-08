@@ -23,6 +23,7 @@ model User {
   updated_at             DateTime    @updatedAt
   deleted_at             DateTime?
   addresses              Addresses[]
+  Order                  Order[]
 }
 
 model Addresses {
@@ -36,22 +37,25 @@ model Addresses {
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt
   deleted_at   DateTime?
-  user         User      @relation(fields: [user_id], references: [id])
   user_id      Int
+  user         User      @relation(fields: [user_id], references: [id])
+  Order        Order[]
 }
 
 model Order {
-  id             Int       @id @default(autoincrement())
+  id             Int        @id @default(autoincrement())
   freight_name   String
   freight_price  Decimal
   total_price    Decimal
   payment_method String
-  status         String    @default("waiting_payment")
+  status         String     @default("waiting_payment")
   boleto_url     String?
   tracking_code  String?
-  created_at     DateTime  @default(now())
-  updated_at     DateTime  @updatedAt
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @updatedAt
   deleted_at     DateTime?
   user_id        Int
   address_id     Int?
+  user           User       @relation(fields: [user_id], references: [id])
+  address        Addresses? @relation(fields: [address_id], references: [id])
 }
