@@ -39,3 +39,19 @@ model Addresses {
   user         User      @relation(fields: [user_id], references: [id])
   user_id      Int
 }
+
+model Order {
+  id             Int       @id @default(autoincrement())
+  freight_name   String
+  freight_price  Decimal
+  total_price    Decimal
+  payment_method String
+  status         String    @default("waiting_payment")
+  boleto_url     String?
+  tracking_code  String?
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @updatedAt
+  deleted_at     DateTime?
+  user_id        Int
+  address_id     Int?
+}
