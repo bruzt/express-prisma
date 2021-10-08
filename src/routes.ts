@@ -4,11 +4,13 @@ import { Router } from "express";
 import sessionController from "./controllers/sessionController";
 import userController from "./controllers/userController";
 import addressController from "./controllers/addressController";
+import orderController from "./controllers/orderController";
 
 // VALIDATORS
 import sessionValidator from "./controllers/sessionController/validators";
 import userValidator from "./controllers/userController/validators";
 import addressValidator from "./controllers/addressController/validators";
+import orderValidator from "./controllers/orderController/validators";
 
 import jwtAuthentication from "./middlewares/jwtAuthentication";
 import adminJwtAuthentication from "./middlewares/adminJwtAuthentication";
@@ -69,6 +71,13 @@ router.delete(
   addressValidator.destroy,
   jwtAuthentication,
   addressController.destroy
+);
+
+router.get(
+  "/orders",
+  orderValidator.list,
+  jwtAuthentication,
+  orderController.list
 );
 
 export default router;
