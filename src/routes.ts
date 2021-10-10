@@ -5,12 +5,14 @@ import sessionController from "./controllers/sessionController";
 import userController from "./controllers/userController";
 import addressController from "./controllers/addressController";
 import orderController from "./controllers/orderController";
+import productController from "./controllers/productController";
 
 // VALIDATORS
 import sessionValidator from "./controllers/sessionController/validators";
 import userValidator from "./controllers/userController/validators";
 import addressValidator from "./controllers/addressController/validators";
 import orderValidator from "./controllers/orderController/validators";
+import productValidator from "./controllers/productController/validators";
 
 import jwtAuthentication from "./middlewares/jwtAuthentication";
 import adminJwtAuthentication from "./middlewares/adminJwtAuthentication";
@@ -73,18 +75,26 @@ router.delete(
   addressController.destroy
 );
 
+// ORDERS
 router.get(
   "/orders",
   orderValidator.list,
   jwtAuthentication,
   orderController.list
 );
-
 router.post(
   "/orders",
   orderValidator.store,
   jwtAuthentication,
   orderController.store
+);
+
+// PRODUCTS
+router.post(
+  "/products",
+  productValidator.store,
+  adminJwtAuthentication,
+  productController.store
 );
 
 export default router;
