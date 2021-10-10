@@ -80,4 +80,11 @@ router.get(
   orderController.list
 );
 
+router.post(
+  "/orders",
+  orderValidator.store,
+  jwtAuthentication,
+  orderController.store
+);
+
 export default router;
