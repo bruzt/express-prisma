@@ -108,6 +108,7 @@ router.post(
 );
 
 // PRODUCTS
+router.get("/products", productValidator.list, cache, productController.list);
 router.post(
   "/products",
   productValidator.store,
