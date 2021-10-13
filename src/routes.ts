@@ -1,4 +1,8 @@
 import { Router } from "express";
+import redisCache from "express-redis-cache";
+import { parseRedisUrl } from "parse-redis-url-simple";
+
+import redis from "./databases/redis/connection";
 
 // CONTROLLERS
 import sessionController from "./controllers/sessionController";
@@ -21,14 +25,26 @@ import adminJwtAuthentication from "./middlewares/adminJwtAuthentication";
 
 const router = Router();
 
+const [parsedRedisUrl] = parseRedisUrl(String(process.env.REDIS_URL));
+const cache = redisCache({
+  host: parsedRedisUrl.host,
+  port: parsedRedisUrl.port,
+  auth_pass: parsedRedisUrl.password,
+}).route({
+  expire: {
+    "2xx": 60, // 60 seconds
+    xxx: 1,
+  },
+});
+
 // SESSION
 router.post("/sessions", sessionValidator.store, sessionController.store);
 
 // USER
 router.get(
   "/users",
-  adminJwtAuthentication,
   userValidator.list,
+  adminJwtAuthentication,
   userController.list
 );
 router.get(
