@@ -2,8 +2,6 @@ import { Router } from "express";
 import redisCache from "express-redis-cache";
 import { parseRedisUrl } from "parse-redis-url-simple";
 
-import redis from "./databases/redis/connection";
-
 // CONTROLLERS
 import sessionController from "./controllers/sessionController";
 import userController from "./controllers/userController";
