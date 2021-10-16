@@ -50,41 +50,38 @@ export default async function show(req: Request, res: Response) {
             in: orderIds,
           },
         },
+        include: {
+          product: {
+            include: {
+              category: true,
+              Product_images: true,
+            },
+          },
+        },
       });
 
-      // get products ids
-      const productsIds = ordersProductsByOrderId.map(
-        (orderProductByOrderId) => orderProductByOrderId.product_id
+      // remove this product id
+      const buyedWithProducts = ordersProductsByOrderId.filter(
+        (ordersProduct) => ordersProduct.product_id != product.id
       );
 
-      // remove this product id
-      const buyedWithProductsIds = productsIds.filter(
-        (productsId) => productsId != product.id
+      // get products ids
+      const buyedWithProductsIds = buyedWithProducts.map(
+        (buyedWithProduct) => buyedWithProduct.product_id
       );
 
       // sort by frequency
       const sortedIds = sortIdsByFrequency(buyedWithProductsIds);
 
-      // get products thas was most buyed with this product
-      const productsBuyedWith = await prisma.product.findMany({
-        where: {
-          id: {
-            in: sortedIds.splice(0, buyedWith * 2),
-          },
-          quantity_stock: {
-            gt: 0,
-          },
-        },
-        take: buyedWith,
-        include: {
-          category: true,
-          Product_images: true,
-        },
-      });
+      for (let i = 0; i < buyedWith; i++) {
+        const [orderProduct] = ordersProductsByOrderId.filter(
+          (ordersProduct) => sortedIds[i] == ordersProduct.product.id
+        );
 
-      productsBuyedWith.forEach((product) => {
-        productWithBuyed.productsBuyedWith.push(product);
-      });
+        if (orderProduct) {
+          productWithBuyed.productsBuyedWith.push(orderProduct.product);
+        }
+      }
     }
 
     return res.json(productWithBuyed);
