@@ -19,7 +19,7 @@ export default async function show(req: Request, res: Response) {
       },
       include: {
         category: true,
-        Product_images: true,
+        images: true,
       },
     });
 
@@ -54,7 +54,7 @@ export default async function show(req: Request, res: Response) {
           product: {
             include: {
               category: true,
-              Product_images: true,
+              images: true,
             },
           },
         },

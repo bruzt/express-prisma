@@ -123,7 +123,7 @@ export default async function list(req: Request, res: Response) {
         orderBy,
         include: {
           category: true,
-          Product_images: true,
+          images: true,
         },
       });
 
@@ -215,7 +215,7 @@ export default async function list(req: Request, res: Response) {
         orderBy,
         include: {
           category: true,
-          Product_images: true,
+          images: true,
         },
       });
 
@@ -234,7 +234,7 @@ export default async function list(req: Request, res: Response) {
         orderBy,
         include: {
           category: true,
-          Product_images: true,
+          images: true,
         },
       });
 
