@@ -182,7 +182,7 @@ export default async function store(req: Request, res: Response) {
         total_price,
         address_id: body.address_id,
         payment_method: req.body.credit_card ? "credit_card" : "boleto",
-        Orders_products: {
+        orders_products: {
           create: products.map((product, i) => ({
             product_id: product.id,
             quantity_buyed: body.quantity_buyed[i],

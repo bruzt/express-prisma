@@ -23,7 +23,7 @@ model User {
   updated_at             DateTime    @updatedAt
   deleted_at             DateTime?
   addresses              Addresses[]
-  Order                  Order[]
+  order                  Order[]
 }
 
 model Addresses {
@@ -39,7 +39,7 @@ model Addresses {
   deleted_at   DateTime?
   user_id      Int
   user         User      @relation(fields: [user_id], references: [id])
-  Order        Order[]
+  order        Order[]
 }
 
 model Order {
@@ -58,7 +58,7 @@ model Order {
   address_id      Int?
   user            User              @relation(fields: [user_id], references: [id])
   address         Addresses?        @relation(fields: [address_id], references: [id])
-  Orders_products Orders_products[]
+  orders_products Orders_products[]
 }
 
 model Category {
@@ -67,7 +67,7 @@ model Category {
   parent_id  Int?
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
-  Product    Product[]
+  product    Product[]
 }
 
 model Product {
