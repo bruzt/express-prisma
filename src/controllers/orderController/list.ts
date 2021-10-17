@@ -35,7 +35,11 @@ export default async function list(req: Request, res: Response) {
         address: true,
         orders_products: {
           include: {
-            product: true,
+            product: {
+              include: {
+                images: true,
+              },
+            },
           },
         },
       },
