@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev dotenv -e .env.dev -- ts-node-dev --respawn --transpile-only --ignore-watch node_modules src/server.ts",
+    "dev": "cross-env NODE_ENV=dev dotenv -e .env.dev -- ts-node-dev --respawn --transpile-only --exit-child --ignore-watch node_modules src/server.ts",
     "build": "tsc",
     "preprod": "cross-env NODE_ENV=prod dotenv -e .env -- prisma migrate deploy",
     "prod": "cross-env NODE_ENV=prod dotenv -e .env -- pm2 start --name api-rest-prisma -i 2 dist/server.js",
