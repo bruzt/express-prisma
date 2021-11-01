@@ -47,8 +47,8 @@ model Order {
   freight_name    String
   freight_price   Decimal
   total_price     Decimal
-  payment_method  String
-  status          String            @default("waiting_payment")
+  payment_method  String?
+  status          String            @default("select_payment_method")
   boleto_url      String?
   tracking_code   String?
   created_at      DateTime          @default(now())

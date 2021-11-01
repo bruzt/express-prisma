@@ -7,6 +7,7 @@ import sessionController from "./controllers/sessionController";
 import userController from "./controllers/userController";
 import addressController from "./controllers/addressController";
 import orderController from "./controllers/orderController";
+import orderPaymentController from "./controllers/orderPaymentController";
 import categoryController from "./controllers/categoryController";
 import productController from "./controllers/productController";
 
@@ -15,6 +16,7 @@ import sessionValidator from "./controllers/sessionController/validators";
 import userValidator from "./controllers/userController/validators";
 import addressValidator from "./controllers/addressController/validators";
 import orderValidator from "./controllers/orderController/validators";
+import orderPaymentValidator from "./controllers/orderPaymentController/validators";
 import categoryValidator from "./controllers/categoryController/validators";
 import productValidator from "./controllers/productController/validators";
 
@@ -103,6 +105,14 @@ router.post(
   orderValidator.store,
   jwtAuthentication,
   orderController.store
+);
+
+// ORDERS/PAYMENT
+router.post(
+  "/orders/:id/payment",
+  orderPaymentValidator.store,
+  jwtAuthentication,
+  orderPaymentController.store
 );
 
 // PRODUCTS
