@@ -5,15 +5,10 @@ import findCategoriesChildrenIds from "../../utils/findCategoriesChildrenIds";
 
 import prisma from "../../databases/prisma/connection";
 
-declare global {
-  interface Array<T> {
-    move: (from: number, to: number) => void;
-  }
+function moveArrayIndex(numberArray: IAnyObject[], from: number, to: number) {
+  numberArray.splice(to, 0, numberArray.splice(from, 1)[0]);
+  return numberArray;
 }
-
-Array.prototype.move = function (from: number, to: number) {
-  this.splice(to, 0, this.splice(from, 1)[0]);
-};
 
 interface IAnyObject {
   [key: string]: string;
@@ -29,7 +24,7 @@ export default async function list(req: Request, res: Response) {
   const limit = req.query.limit ? Number(req.query.limit) : undefined;
   const offset = req.query.offset ? Number(req.query.offset) : undefined;
 
-  const arrayOrder: IAnyObject[] = [
+  let arrayOrder: IAnyObject[] = [
     { quantity_stock: "desc" },
     { discount_percent: "desc" },
     { quantity_sold: "desc" },
@@ -156,26 +151,16 @@ export default async function list(req: Request, res: Response) {
                 gt: 0,
               },
             },
-            {
-              quantity_stock: {
-                gt: 0,
-              },
-            },
           ],
         };
       } else if (section == "best-sellers") {
-        arrayOrder.move(2, 0);
+        arrayOrder = moveArrayIndex(arrayOrder, 2, 0);
         orderBy = arrayOrder;
 
         where = {
           AND: [
             {
               quantity_sold: {
-                gt: 0,
-              },
-            },
-            {
-              quantity_stock: {
                 gt: 0,
               },
             },
@@ -193,11 +178,6 @@ export default async function list(req: Request, res: Response) {
             {
               created_at: {
                 gte: date,
-              },
-            },
-            {
-              quantity_stock: {
-                gt: 0,
               },
             },
           ],
