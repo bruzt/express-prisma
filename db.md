@@ -13,11 +13,11 @@ sudo docker run -d --rm \
 ```
 
 ```
-npm run migrate:dev
+npm run dev:migrate
 ```
 
 ```
-npx prisma studio
+npm run dev:studio
 ```
 
 ## Test

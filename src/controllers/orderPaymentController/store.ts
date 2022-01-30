@@ -221,10 +221,14 @@ export default async function store(req: Request, res: Response) {
 
     return res.json({ order: updatedOrder, pagarMeResponse });
   } catch (error) {
+    //@ts-ignore
     if (error?.response?.errors[0]?.message) {
-      return res
-        .status(400)
-        .json({ message: error.response.errors[0].message });
+      return (
+        res
+          .status(400)
+          //@ts-ignore
+          .json({ message: error.response.errors[0].message })
+      );
     }
 
     if (error instanceof Error) {

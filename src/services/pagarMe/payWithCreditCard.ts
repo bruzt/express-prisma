@@ -1,6 +1,6 @@
 import pagarMeClient from "./client";
 
-import { ICreditCard } from "../../controllers/orderController/store";
+import { ICreditCard } from "../../controllers/orderPaymentController/store";
 
 interface IPagarMeCreditCardResponse {
   status: string;

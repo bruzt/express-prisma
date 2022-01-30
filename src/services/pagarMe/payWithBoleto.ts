@@ -1,6 +1,6 @@
 import pagarMeClient from "./client";
 
-import { IBoleto } from "../../controllers/orderController/store";
+import { IBoleto } from "../../controllers/orderPaymentController/store";
 
 interface IPagarMeBoletoResponse {
   status: string;

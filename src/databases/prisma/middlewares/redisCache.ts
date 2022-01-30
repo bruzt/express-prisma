@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 
 import redisConnection from "../../redis/connection";
 
-export default async function encryptUserPassword(
+export default async function redisCache(
   params: Prisma.MiddlewareParams,
   next: (params: Prisma.MiddlewareParams) => Promise<any>
 ) {
